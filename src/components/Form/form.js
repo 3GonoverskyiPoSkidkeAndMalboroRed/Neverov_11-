@@ -1,8 +1,12 @@
+/* eslint-disable */
 import React, { useState } from 'react';
+import Info from '../Information/Info.js'
 import './form.css';
-import {validateDateOfBirth, validateFullName, validatePhoneNumber, validateEmail, validateFutureDate} from './utils.js'
+import {
+  validateDateOfBirth, validateFullName, validatePhoneNumber, validateEmail, validateFutureDate,
+} from './utils.js';
 
-const MainForm = () => {
+function MainForm() {
   const [fullName, setFullName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -35,10 +39,10 @@ const MainForm = () => {
   };
 
   const formatPhoneNumber = (value) => {
-    const cleaned = ('' + value).replace(/\D/g, '');
-    let match = cleaned.match(/^(7|8)?(\d{3})(\d{3})(\d{2})(\d{2})$/);
+    const cleaned = (`${value}`).replace(/\D/g, '');
+    const match = cleaned.match(/^(7|8)?(\d{3})(\d{3})(\d{2})(\d{2})$/);
     if (match) {
-      let intlCode = (match[1] ? '+7' : '');
+      const intlCode = (match[1] ? '+7' : '');
       return [intlCode, match[2], match[3], match[4], match[5]].filter(Boolean).join('-');
     }
     return value;
@@ -102,6 +106,7 @@ const MainForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    alert("ВЫ ОТПРАВИЛИ ФОРМУ")
     // Дополнительная проверка перед отправкой формы, если нужно
   };
 
@@ -177,6 +182,6 @@ const MainForm = () => {
       </form>
     </main>
   );
-};
+}
 
 export default MainForm;

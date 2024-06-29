@@ -1,11 +1,11 @@
 import React from 'react';
 import './footer.css';
 
-const Footer = () => {
+function Footer() {
   return (
     <footer className="footer">
       <div className="contactInfo">
-        <h2>Контакты для связи</h2>
+
         <p>Телефон: +7-900-000-00-00</p>
         <p>Email: example@example.com</p>
         <p>Адрес: ул. Пушкина, д. Колотушкина</p>
@@ -15,7 +15,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+}
 
 export default Footer;
-
