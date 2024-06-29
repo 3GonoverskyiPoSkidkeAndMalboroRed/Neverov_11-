@@ -30,6 +30,7 @@ const validateFutureDate = (date) => {
   return selectedDate >= nextDay;
 };
 
+
 export {
   validateFullName,
   validateEmail,

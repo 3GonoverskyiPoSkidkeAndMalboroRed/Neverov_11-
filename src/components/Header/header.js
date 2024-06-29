@@ -7,7 +7,7 @@ function Header() {
   return (
     <div className="header">
       <img src={logo} alt="Logo" className="logo" />
-      <h1 className="title">My Website Title</h1> {/* Add a title element here */}
+      <h1 className="title">Берег моря</h1> {/* Add a title element here */}
     </div>
   );
 }

@@ -49,9 +49,10 @@ function MainForm() {
   };
 
   const handlePhoneNumberChange = (value) => {
-    const formattedValue = formatPhoneNumber(value);
+    const cleaned = value.replace(/[^0-9+-]/g, ''); // only allow digits, +, and -
+    const formattedValue = formatPhoneNumber(cleaned);
     setPhoneNumber(formattedValue);
-
+  
     if (value.trim() === '') {
       setPhoneNumberError('Номер телефона не может быть пустым');
     } else {
@@ -80,6 +81,7 @@ function MainForm() {
       setFutureDateError('');
     }
   };
+  
 
   const handleBlur = (e) => {
     const { id, value } = e.target;
@@ -104,16 +106,39 @@ function MainForm() {
     }
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("ВЫ ОТПРАВИЛИ ФОРМУ")
-    // Дополнительная проверка перед отправкой формы, если нужно
+    const hasErrors = [
+      fullNameError,
+      dateOfBirthError,
+      phoneNumberError,
+      emailError,
+      futureDateError,
+    ].some((error) => error !== '');
+
+    if (hasErrors) {
+      alert('Пожалуйста, исправьте ошибки в форме перед отправкой');
+      return;
+    }
+
+    const formData = {
+      fullName,
+      phoneNumber,
+      futureDate,
+    };
+
+    alert(`Вы отправили форму с данными:\n` +
+      `ФИО: ${formData.fullName}\n` +
+      `Номер телефона: ${formData.phoneNumber}\n` +
+      `Дата и время: ${formData.futureDate}`);
   };
+
 
   return (
     <main className="main">
       <form onSubmit={handleSubmit} className="form">
-        <h1>Название формы</h1>
+        <h1>Бронирование</h1>
         <div className="formGroup">
           <input
             type="text"
@@ -121,25 +146,13 @@ function MainForm() {
             value={fullName}
             onChange={(e) => handleFullNameChange(e.target.value)}
             onBlur={handleBlur}
-            placeholder="Иван Иванов"
+            placeholder="Имя Фамилия"
             required
           />
           <label htmlFor="fullName" className="label sr-only">ФИО</label>
           {fullNameError && <p className="error">{fullNameError}</p>}
         </div>
-        <div className="formGroup">
-          <input
-            type="date"
-            id="dateOfBirth"
-            value={dateOfBirth}
-            onChange={(e) => handleDateOfBirthChange(e.target.value)}
-            onBlur={handleBlur}
-            placeholder="01.01.1990"
-            required
-          />
-          <label htmlFor="dateOfBirth" className="label sr-only">Дата рождения</label>
-          {dateOfBirthError && <p className="error">{dateOfBirthError}</p>}
-        </div>
+
         <div className="formGroup">
           <input
             type="text"
@@ -147,7 +160,7 @@ function MainForm() {
             value={phoneNumber}
             onChange={(e) => handlePhoneNumberChange(e.target.value)}
             onBlur={handleBlur}
-            placeholder="+7-900-000-00-00"
+            placeholder="+7-XXX-XXX-XX-XX"
             required
           />
           <label htmlFor="phoneNumber" className="label sr-only">Номер телефона</label>
@@ -155,27 +168,14 @@ function MainForm() {
         </div>
         <div className="formGroup">
           <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => handleEmailChange(e.target.value)}
-            onBlur={handleBlur}
-            placeholder="example@example.com"
-            required
-          />
-          <label htmlFor="email" className="label sr-only">Электронная почта</label>
-          {emailError && <p className="error">{emailError}</p>}
-        </div>
-        <div className="formGroup">
-          <input
-            type="date"
+            type="datetime-local"
             id="futureDate"
             value={futureDate}
             onChange={(e) => handleFutureDateChange(e.target.value)}
             onBlur={handleBlur}
             required
           />
-          <label htmlFor="futureDate" className="label sr-only">Будущая дата</label>
+          <label htmlFor="futureDate" className="label sr-only">Выбор дату и времени</label>
           {futureDateError && <p className="error">{futureDateError}</p>}
         </div>
         <button type="submit">Отправить</button>
